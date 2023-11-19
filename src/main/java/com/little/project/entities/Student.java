@@ -18,11 +18,11 @@ public class Student implements Serializable{
     private Long id;
 
     private String name;
-    private Course course;
+    private String course;
 
     public Student(){}
 
-    public Student(Long id, String name, Course course) {
+    public Student(Long id, String name, String course) {
         this.id = id;
         this.name = name;
         this.course = course;
@@ -44,11 +44,11 @@ public class Student implements Serializable{
         this.name = name;
     }
 
-    public Course getCourse() {
+    public String getCourse() {
         return course;
     }
 
-    public void setCourse(Course course) {
+    public void setCourse(String course) {
         this.course = course;
     }
 
