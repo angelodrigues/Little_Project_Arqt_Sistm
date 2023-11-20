@@ -7,27 +7,30 @@ import java.util.List;
 import org.hibernate.annotations.ManyToAny;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_student")
-public class Student implements Serializable{
+@Table(name = "tb_course")
+public class Course implements Serializable{
     private static final long serialVersionUID = 1L;
 
-    @Id    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
-    
+
     @ManyToAny
-    private List<Course> courses = new ArrayList<>();
+    private List<Student> students = new ArrayList<>();
 
-    public Student(){}
+    public Course(){}
 
-    public Student(Long id, String name, List<Course> courses) {
+    public Course(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.courses = courses;
     }
 
     public Long getId() {
@@ -46,12 +49,8 @@ public class Student implements Serializable{
         this.name = name;
     }
 
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
+    public List<Student> getStudents() {
+        return students;
     }
 
     @Override
@@ -70,12 +69,12 @@ public class Student implements Serializable{
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Student other = (Student) obj;
+        Course other = (Course) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
         } else if (!id.equals(other.id))
             return false;
         return true;
-    }
+    }       
 }
