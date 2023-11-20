@@ -1,15 +1,16 @@
 package com.little.project.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.hibernate.annotations.ManyToAny;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,8 +24,9 @@ public class Course implements Serializable{
 
     private String name;
 
-    @ManyToAny
-    private List<Student> students = new ArrayList<>();
+    @JsonIgnore
+    @ManyToMany(mappedBy = "courses")
+    private Set<Student> students = new HashSet<>();
 
     public Course(){}
 
@@ -49,7 +51,7 @@ public class Course implements Serializable{
         this.name = name;
     }
 
-    public List<Student> getStudents() {
+    public Set<Student> getStudents() {
         return students;
     }
 
@@ -57,7 +59,7 @@ public class Course implements Serializable{
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
 
@@ -70,11 +72,18 @@ public class Course implements Serializable{
         if (getClass() != obj.getClass())
             return false;
         Course other = (Course) obj;
-        if (id == null) {
-            if (other.id != null)
+        if (name == null) {
+            if (other.name != null)
                 return false;
-        } else if (!id.equals(other.id))
+        } else if (!name.equals(other.name))
             return false;
         return true;
-    }       
+    }
+
+    @Override
+    public String toString() {
+        return  name;
+    }
+
+         
 }

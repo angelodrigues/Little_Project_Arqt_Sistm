@@ -1,13 +1,14 @@
 package com.little.project.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.hibernate.annotations.ManyToAny;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,13 +19,14 @@ public class Student implements Serializable{
     @Id    
     private Long id;
     private String name;
-    
-    @ManyToAny
-    private List<Course> courses = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "tb_student_course", joinColumns = @JoinColumn(name = "student_id"),inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private Set<Course> courses = new HashSet<>();
 
     public Student(){}
 
-    public Student(Long id, String name, List<Course> courses) {
+    public Student(Long id, String name, Set<Course>  courses) {
         this.id = id;
         this.name = name;
         this.courses = courses;
@@ -46,11 +48,11 @@ public class Student implements Serializable{
         this.name = name;
     }
 
-    public List<Course> getCourses() {
+    public Set<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(List<Course> courses) {
+    public void setCourses(Set<Course> courses) {
         this.courses = courses;
     }
 
