@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.little.project.entities.Course;
 import com.little.project.entities.Student;
+import com.little.project.repositories.CourseRepository;
 import com.little.project.repositories.StudentRepository;
 import com.little.project.service.exceptions.ResourceNotFoundException;
 
@@ -18,6 +19,8 @@ public class StudentService {
 
     @Autowired
     private StudentRepository repository;
+
+    @Autowired CourseRepository courseRepository;
 
     public List<Student> findAll() {
         return repository.findAll();
@@ -39,23 +42,44 @@ public class StudentService {
         }
     }
 
-    public Student addCourseToStudent(Long id, Course courseToAdd) {
-        Optional<Student> studentOptional = repository.findById(id);
-
+    public Student addCourseToStudent(Long studentId, Long courseId) {
+        Optional<Student> studentOptional = repository.findById(studentId);
+    
         if (studentOptional.isPresent()) {
             Student student = studentOptional.get();
             Set<Course> existingCourses = student.getCourses();
-            
-            if (existingCourses.contains(courseToAdd)) {
+                
+            if (existingCourses.stream().anyMatch(course -> course.getId().equals(courseId))) {
                 throw new IllegalArgumentException("O aluno já está matriculado neste curso.");
             }
-
-            existingCourses.add(courseToAdd);
+    
+            Course course = courseRepository.findById(courseId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Curso não encontrado com o ID: " + courseId));
+    
+            existingCourses.add(course);
             student.setCourses(existingCourses);
+    
+            return repository.save(student);
+        } else {
+            throw new ResourceNotFoundException("Aluno não encontrado com o ID: " + studentId);
+        }
+    }
+    
+
+    public Student removeCourseFromStudent(Long studentId, Long courseId) {
+        Optional<Student> studentOptional = repository.findById(studentId);
+
+        if (studentOptional.isPresent()) {
+            Student student = studentOptional.get();
+            Set<Course> courses = student.getCourses();
+
+            courses.removeIf(course -> course.getId().equals(courseId));
+
+            student.setCourses(courses);
 
             return repository.save(student);
         } else {
-            throw new ResourceNotFoundException(id);
+            throw new ResourceNotFoundException(studentId);
         }
     }
 }
