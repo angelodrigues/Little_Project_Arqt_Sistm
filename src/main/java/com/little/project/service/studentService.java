@@ -38,4 +38,24 @@ public class StudentService {
             return Collections.emptySet();
         }
     }
+
+    public Student addCourseToStudent(Long id, Course courseToAdd) {
+        Optional<Student> studentOptional = repository.findById(id);
+
+        if (studentOptional.isPresent()) {
+            Student student = studentOptional.get();
+            Set<Course> existingCourses = student.getCourses();
+            
+            if (existingCourses.contains(courseToAdd)) {
+                throw new IllegalArgumentException("O aluno já está matriculado neste curso.");
+            }
+
+            existingCourses.add(courseToAdd);
+            student.setCourses(existingCourses);
+
+            return repository.save(student);
+        } else {
+            throw new ResourceNotFoundException(id);
+        }
+    }
 }
