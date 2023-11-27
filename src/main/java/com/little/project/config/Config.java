@@ -31,6 +31,9 @@ public class Config implements CommandLineRunner {
     @Value("${api.url}")
     private String apiUrl;
 
+    @Value("${api.biblioteca}")
+    private String apiBiblioteca;
+
     @Override
     public void run(String... args) throws Exception {
         RestTemplate restTemplate = new RestTemplate();
