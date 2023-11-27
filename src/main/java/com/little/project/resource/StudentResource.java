@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.little.project.entities.Book;
 import com.little.project.entities.Course;
 import com.little.project.entities.Student;
 import com.little.project.service.StudentService;
@@ -34,7 +35,7 @@ public class StudentResource {
         Student obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
-
+    //COURSES
     @GetMapping(value = "/{id}/courses")
     public ResponseEntity<Set<Course>> findCoursesById(@PathVariable Long id){
         Set<Course> courses = service.findCoursesById(id);
@@ -50,6 +51,24 @@ public class StudentResource {
     @DeleteMapping(value = "/{id}/courses/{courseId}")
     public ResponseEntity<Student> removeCourseFromStudent(@PathVariable Long id, @PathVariable Long courseId) {
         Student updatedStudent = service.removeCourseFromStudent(id, courseId);
+        return ResponseEntity.ok().body(updatedStudent);
+    }
+    //BOOKS
+    @GetMapping(value = "/{id}/books")
+    public ResponseEntity<Set<Book>> getRentedBooks(@PathVariable Long id) {
+        Set<Book> rentedBooks = service.getRentedBooks(id);
+        return ResponseEntity.ok().body(rentedBooks);
+    }
+
+    @PostMapping(value = "/{id}/books/{bookId}")
+    public ResponseEntity<Student> rentBook(@PathVariable Long id, @PathVariable Long bookId) {
+        Student updatedStudent = service.rentBook(id, bookId);
+        return ResponseEntity.ok().body(updatedStudent);
+    }
+
+    @DeleteMapping(value = "/{id}/books/{bookId}")
+    public ResponseEntity<Student> returnBook(@PathVariable Long id, @PathVariable Long bookId) {
+        Student updatedStudent = service.returnBook(id, bookId);
         return ResponseEntity.ok().body(updatedStudent);
     }
 }

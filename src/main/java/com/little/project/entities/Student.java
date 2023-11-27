@@ -24,6 +24,10 @@ public class Student implements Serializable{
     @JoinTable(name = "tb_student_course", joinColumns = @JoinColumn(name = "student_id"),inverseJoinColumns = @JoinColumn(name = "course_id"))
     private Set<Course> courses = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(name = "tb_studen_book", joinColumns = @JoinColumn(name = "student_id"),inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private Set<Book> books = new HashSet<>();
+
     public Student(){}
 
     public Student(Long id, String name, Set<Course>  courses) {
@@ -55,6 +59,15 @@ public class Student implements Serializable{
     public void setCourses(Set<Course> courses) {
         this.courses = courses;
     }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
 
     @Override
     public int hashCode() {
