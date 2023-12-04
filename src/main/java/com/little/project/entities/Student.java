@@ -13,27 +13,32 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_student")
-public class Student implements Serializable{
+public class Student implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id    
+    @Id
     private Long id;
     private String name;
 
     @ManyToMany
-    @JoinTable(name = "tb_student_course", joinColumns = @JoinColumn(name = "student_id"),inverseJoinColumns = @JoinColumn(name = "course_id"))
+    @JoinTable(name = "tb_student_course", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
     private Set<Course> courses = new HashSet<>();
 
     @ManyToMany
-    @JoinTable(name = "tb_studen_book", joinColumns = @JoinColumn(name = "student_id"),inverseJoinColumns = @JoinColumn(name = "book_id"))
+    @JoinTable(name = "tb_studen_book", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
     private Set<Book> books = new HashSet<>();
 
-    public Student(){}
+    @ManyToMany
+    @JoinTable(name = "tb_student_discipline", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "discipline_id"))
+    private Set<Discipline> disciplines = new HashSet<>();
 
-    public Student(Long id, String name, Set<Course>  courses) {
+    public Student() {
+    }
+
+    public Student(Long id, String name, Set<Course> courses) {
         this.id = id;
         this.name = name;
-        this.courses = courses;
+        this.courses = courses;     
     }
 
     public Long getId() {
@@ -60,14 +65,21 @@ public class Student implements Serializable{
         this.courses = courses;
     }
 
-    public void setBooks(Set<Book> books) {
-        this.books = books;
-    }
-
     public Set<Book> getBooks() {
         return books;
     }
 
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
+
+    public Set<Discipline> getDisciplines() {
+        return disciplines;
+    }
+
+    public void setDisciplines(Set<Discipline> disciplines) {
+        this.disciplines = disciplines;
+    }
 
     @Override
     public int hashCode() {
