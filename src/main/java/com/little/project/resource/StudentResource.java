@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.little.project.entities.Book;
 import com.little.project.entities.Course;
+import com.little.project.entities.Discipline;
 import com.little.project.entities.Student;
 import com.little.project.service.StudentService;
 
@@ -69,6 +70,25 @@ public class StudentResource {
     @DeleteMapping(value = "/{id}/books/{bookId}")
     public ResponseEntity<Student> returnBook(@PathVariable Long id, @PathVariable Long bookId) {
         Student updatedStudent = service.returnBook(id, bookId);
+        return ResponseEntity.ok().body(updatedStudent);
+    }
+
+    // DISCIPLINES
+    @GetMapping(value = "/{id}/disciplines")
+    public ResponseEntity<Set<Discipline>> getEnrolledDisciplines(@PathVariable Long id) {
+        Set<Discipline> enrolledDisciplines = service.getEnrolledDisciplines(id);
+        return ResponseEntity.ok().body(enrolledDisciplines);
+    }
+
+    @PostMapping(value = "/{id}/disciplines/{disciplineId}")
+    public ResponseEntity<Student> enrollInDiscipline(@PathVariable Long id, @PathVariable Long disciplineId) {
+        Student updatedStudent = service.enrollInDiscipline(id, disciplineId);
+        return ResponseEntity.ok().body(updatedStudent);
+    }
+
+    @DeleteMapping(value = "/{id}/disciplines/{disciplineId}")
+    public ResponseEntity<Student> cancelEnrollmentInDiscipline(@PathVariable Long id, @PathVariable Long disciplineId) {
+        Student updatedStudent = service.cancelEnrollmentInDiscipline(id, disciplineId);
         return ResponseEntity.ok().body(updatedStudent);
     }
 }

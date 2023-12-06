@@ -30,7 +30,7 @@ public class Course implements Serializable{
     @ManyToMany(mappedBy = "courses")
     private Set<Student> students = new HashSet<>();
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Discipline> disciplines = new HashSet<>();
 
     public Course(){}
@@ -58,6 +58,10 @@ public class Course implements Serializable{
 
     public Set<Student> getStudents() {
         return students;
+    }
+
+    public void setDisciplines(Set<Discipline> disciplines) {
+        this.disciplines = disciplines;
     }
 
     @Override

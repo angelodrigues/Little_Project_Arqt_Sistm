@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.little.project.entities.Book;
 import com.little.project.entities.Course;
+import com.little.project.entities.Discipline;
 import com.little.project.entities.Student;
 import com.little.project.repositories.BookRepository;
 import com.little.project.repositories.CourseRepository;
+import com.little.project.repositories.DisciplineRepository;
 import com.little.project.repositories.StudentRepository;
 import com.little.project.service.exceptions.ResourceNotFoundException;
 
@@ -25,6 +27,8 @@ public class StudentService {
     @Autowired CourseRepository courseRepository;
 
     @Autowired BookRepository bookRepository;
+
+    @Autowired DisciplineRepository disciplineRepository;
 
     public List<Student> findAll() {
         return repository.findAll();
@@ -138,5 +142,52 @@ public class StudentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Aluno não encontrado com o ID: " + studentId));
 
         return student.getBooks();
+    }
+
+    public Set<Discipline> getEnrolledDisciplines(Long studentId) {
+        Student student = repository.findById(studentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Aluno não encontrado com o ID: " + studentId));
+
+        return student.getDisciplines();
+    }
+
+    public Student enrollInDiscipline(Long studentId, Long disciplineId) {
+        Optional<Student> studentOptional = repository.findById(studentId);
+
+        if (studentOptional.isPresent()) {
+            Student student = studentOptional.get();
+            Set<Discipline> enrolledDisciplines = student.getDisciplines();
+
+            Discipline discipline = disciplineRepository.findById(disciplineId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Disciplina não encontrada com o ID: " + disciplineId));
+
+            if (enrolledDisciplines.contains(discipline)) {
+                throw new IllegalArgumentException("O aluno já está matriculado nesta disciplina.");
+            }
+
+            enrolledDisciplines.add(discipline);
+            student.setDisciplines(enrolledDisciplines);
+
+            return repository.save(student);
+        } else {
+            throw new ResourceNotFoundException("Aluno não encontrado com o ID: " + studentId);
+        }
+    }
+
+    public Student cancelEnrollmentInDiscipline(Long studentId, Long disciplineId) {
+        Optional<Student> studentOptional = repository.findById(studentId);
+
+        if (studentOptional.isPresent()) {
+            Student student = studentOptional.get();
+            Set<Discipline> enrolledDisciplines = student.getDisciplines();
+
+            enrolledDisciplines.removeIf(discipline -> discipline.getId().equals(disciplineId));
+
+            student.setDisciplines(enrolledDisciplines);
+
+            return repository.save(student);
+        } else {
+            throw new ResourceNotFoundException("Aluno não encontrado com o ID: " + studentId);
+        }
     }
 }

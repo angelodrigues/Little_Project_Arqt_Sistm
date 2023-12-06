@@ -27,9 +27,13 @@ public class Student implements Serializable {
     @ManyToMany
     @JoinTable(name = "tb_studen_book", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
     private Set<Book> books = new HashSet<>();
-
+    
     @ManyToMany
-    @JoinTable(name = "tb_student_discipline", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "discipline_id"))
+    @JoinTable(
+        name = "tb_student_discipline",
+        joinColumns = @JoinColumn(name = "student_id"),
+        inverseJoinColumns = @JoinColumn(name = "discipline_id")
+    )
     private Set<Discipline> disciplines = new HashSet<>();
 
     public Student() {
