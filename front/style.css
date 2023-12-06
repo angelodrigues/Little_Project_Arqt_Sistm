@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #333;
+    color: #fff;
+    margin: 20px;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.content-container {
+    max-width: 800px; /* ou qualquer largura desejada */
+    width: 100%;
+}
+
+h1 {
+    color: #00bcd4;
+    text-align: center;
+    font-size: 2.8rem;
+}
+
+h2 {
+    color: #00bcd4;
+}
+
+div {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #00bcd4;
+}
+
+button {
+    background-color: #00bcd4;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px; /* Adicionando cantos arredondados */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+input {
+    padding: 0.4rem;
+}
+
+input,
+button {
+    margin-bottom: 10px;
+}
+
+/* Estilo para seções */
+section {
+    width: 100%;
+    max-width:1000px;
+    background-color: #686767;
+    color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.center-content {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilo para tornar as seções meia largura */
+.half-width {
+    margin: 1rem;
+    width: 50%;
+}
+
+/* Estilo para botões dentro de seções */
+section button {
+    margin-top: 10px;
+}

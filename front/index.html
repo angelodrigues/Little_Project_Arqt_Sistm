@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script type="text/javascript" src="custom.js"></script>
+        <link rel="stylesheet" href="style.css" />
+        <title>Student Management System</title>
+    </head>
+
+    <body>
+        <main>
+            <div>
+                <h1>Student Management System</h1>
+                <section id="sec_student" class="center-content">
+                    <div class="half-width">
+                        <h2>All Students</h2>
+                        <button onclick="getAllStudents()">Get All Students</button>
+                        <ul id="allStudentsList"></ul>
+                    </div>    
+                    <div class="half-width"> 
+                        <h2>Find Student by ID</h2>
+                        <label for="studentId">Enter Student ID:</label>
+                        <input type="number" id="studentId" min="1" />
+                        <button onclick="getStudentById()">Find Student</button>
+                        <div id="foundStudentDetails"></div>
+                    </div>
+                    <div class="half-width">
+                        <h2>Find Student Courses by ID</h2>
+                        <label for="studentIdCourses">Enter Student ID:</label>
+                        <input type="number" id="studentIdCourses" min="1" />                       
+                        <button onclick="getStudentCoursesById()">Find Courses</button>
+                        <div id="foundStudentCourses"></div>
+                    </div>
+                </section>
+                <section id="sec_book"  class="center-content">
+                    <div class="half-width">
+                        <h2>All Books</h2>
+                        <button onclick="getAllBooks()">Get All Books</button>
+                        <ul id="allBooksList"></ul>
+                    </div>    
+                    <div class="half-width">
+                        <h2>Add Book to Student</h2>
+                        <label for="addBookStudentId">Enter Student ID:</label>
+                        <input type="number" id="addBookStudentId" min="1" />
+                        <label for="addBookId">Enter Book ID:</label>
+                        <input type="number" id="addBookId" min="1" />
+                        <button onclick="getStudentAndAddBook()">Add Book to Student</button>
+                        <div id="addedBookDetails"></div>
+                    </div>    
+                    <div class="half-width">
+                        <h2>Remove Book from Student</h2>
+                        <label for="removeBookStudentId">Enter Student ID:</label>
+                        <input type="number" id="removeBookStudentId" min="1" />
+                        <label for="removeBookId">Enter Book ID:</label>
+                        <input type="number" id="removeBookId" min="1" />
+                        <button onclick="getStudentAndRemoveBook()">Remove Book from Student</button>
+                        <div id="removedBookDetails"></div>
+                    </div>
+                </section>
+                <section id="sec_disciplines" class="center-content">
+                    <div class="half-width">
+                        <h2>All Disciplines</h2>
+                        <button onclick="getAllDisciplines()">Get All Disciplines</button>
+                        <ul id="allDisciplinesList"></ul>
+                    </div>    
+                    <div class="half-width">
+                        <h2>Add Discipline to Student</h2>
+                        <label for="addDisciplineStudentId">Enter Student ID:</label>
+                        <input type="number" id="addDisciplineStudentId" min="1" />
+                        <label for="addDisciplineId">Enter Discipline ID:</label>
+                        <input type="number" id="addDisciplineId" min="1" />
+                        <button onclick="getStudentAndAddDiscipline()">Add Discipline to Student</button>
+                        <div id="addedDisciplineDetails"></div>
+                    </div>    
+                    <div class="half-width">
+                        <h2>Remove Discipline from Student</h2>
+                        <label for="removeDisciplineStudentId">Enter Student ID:</label>
+                        <input type="number" id="removeDisciplineStudentId" min="1" />
+                        <label for="removeDisciplineId">Enter Discipline ID:</label>
+                        <input type="number" id="removeDisciplineId" min="1" />
+                        <button onclick="getStudentAndRemoveDiscipline()">Remove Discipline from Student</button>
+                        <div id="removedDisciplineDetails"></div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </body>
+</html>
